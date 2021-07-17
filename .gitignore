@@ -1,0 +1,12 @@
+# self-explainatory
+*.log
+
+# mac trash
+.DS_Store
+
+# vim backups
+*.swp
+*~
+
+# VS code
+.history/

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Downloads the current release version of Citrix Endpoint Analysis and imports into Munki.</string>
+	<key>Identifier</key>
+	<string>com.github.slangdaddy.munki.CitrixEndpointAnalysis</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>CitrixEndpointAnalysis</string>
+		<key>MUNKI_REPO_SUBDIR</key>
+		<string>apps/Citrix</string>
+		<key>MUNKI_CATEGORY</key>
+		<string>Internet Plugins</string>
+		<key>pkginfo</key>
+		<dict>
+			<key>blocking_applications</key>
+			<array>
+				<string>Citrix Endpoint Analysis</string>
+				<string>Firefox</string>
+				<string>Safari</string>
+				<string>Google Chrome</string>
+			</array>
+			<key>catalogs</key>
+			<array>
+				<string>testing</string>
+			</array>
+			<key>category</key>
+			<string>%MUNKI_CATEGORY%</string>
+			<key>description</key>
+			<string>This is the browser plugin for Citrix to enforce endpoint compliance, for example when using Citrix Receiver.</string>
+			<key>developer</key>
+			<string>Citrix Systems, Inc.</string>
+			<key>display_name</key>
+			<string>Citrix Endpoint Analysis</string>
+			<key>minimum_os_version</key>
+			<string>10.10</string>
+			<key>name</key>
+			<string>%NAME%</string>
+			<key>unattended_install</key>
+			<true/>
+			<key>unattended_uninstall</key>
+			<true/>
+                        <key>postinstall_script</key>
+                        <string><![CDATA[#!/bin/bash
+set -e
+# by default its root:wheel with 700
+echo "Allow access to the plugin(s) for all users (chmod 0755)"
+chmod 0755 /Library/Application\ Support/Citrix/EPAPlugin
+]]></string>
+		</dict>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>0.2.0</string>
+	<key>ParentRecipe</key>
+	<string>com.github.slangdaddy.download.CitrixEndpointAnalysis</string>
+	<key>Process</key>
+	<array>
+		<dict>
+		    <key>Arguments</key>
+		    <dict>
+			<key>pkgroot</key>
+			<string>%RECIPE_CACHE_DIR%/root</string>
+			<key>pkgdirs</key>
+			<dict>
+			    <key>Library</key>
+			    <string>0775</string>
+			    <key>Application Support</key>
+			    <string>0775</string>
+			    <key>Citrix</key>
+			    <string>0775</string>
+			    <key>EPAPlugin</key>
+			    <string>0775</string>
+			</dict>
+		    </dict>
+		    <key>Processor</key>
+		    <string>PkgRootCreator</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>flat_pkg_path</key>
+				<string>%pathname%/*.pkg</string>
+				<key>destination_path</key>
+				<string>%RECIPE_CACHE_DIR%/unpack</string>
+			</dict>
+			<key>Processor</key>
+			<string>FlatPkgUnpacker</string>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>pkg_payload_path</key>
+				<string>%RECIPE_CACHE_DIR%/unpack/citrixendpointanalysis.pkg/Payload</string>
+				<key>destination_path</key>
+				<string>%RECIPE_CACHE_DIR%/root/Library/Application Support/Citrix/EPAPlugin</string>
+			</dict>
+			<key>Processor</key>
+			<string>PkgPayloadUnpacker</string>
+		</dict>
+		<dict>
+		    <key>Processor</key>
+		    <string>Versioner</string>
+		    <key>Arguments</key>
+		    <dict>
+			<key>input_plist_path</key>
+			<string>%RECIPE_CACHE_DIR%/root/Library/Application Support/Citrix/EPAPlugin/CitrixEndpointAnalysis.app/Contents/Info.plist</string>
+		    </dict>
+		</dict>
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>installs_item_paths</key>
+				<array>
+					<string>/Library/Application Support/Citrix/EPAPlugin/CitrixEndpointAnalysis.app</string>
+				</array>
+				<key>faux_root</key>
+				<string>%RECIPE_CACHE_DIR%/root</string>
+				<key>additional_pkginfo</key>
+				<dict>
+				    <key>version</key>
+				    <string>%version%</string>
+				</dict>
+			</dict>
+			<key>Processor</key>
+			<string>MunkiInstallsItemsCreator</string>
+		</dict>
+		<dict>
+			<key>Processor</key>
+			<string>MunkiPkginfoMerger</string>
+			<key>Arguments</key>
+			<dict>
+			</dict>
+		</dict>
+		<!--
+		<dict>
+			<key>Arguments</key>
+			<dict>
+				<key>path_list</key>
+				<array>
+					<string>%RECIPE_CACHE_DIR%/unpack</string>
+					<string>%RECIPE_CACHE_DIR%/payload</string>
+				</array>
+			</dict>
+			<key>Processor</key>
+			<string>PathDeleter</string>
+		</dict>
+		-->
+
+		<dict>
+			<key>Processor</key>
+			<string>MunkiImporter</string>
+			<key>Arguments</key>
+			<dict>
+				<key>munkiimport_pkgname</key>
+				<string>Install Citrix Endpoint Analysis Plug-in.pkg</string>
+				<key>pkg_path</key>
+				<string>%pathname%</string>
+				<key>repo_subdirectory</key>
+				<string>%MUNKI_REPO_SUBDIR%</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

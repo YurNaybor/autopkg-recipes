@@ -56,7 +56,7 @@
                 <key>destination_path</key>
                 <string>%pkgroot%/etc/paths.d/</string>
                 <key>source_path</key>
-                <string>%RECIPE_DIR%/src/etc/paths.d/kdiff3</string>
+                <string>src/etc/paths.d/kdiff3</string>
             </dict>
         </dict>
         <dict>

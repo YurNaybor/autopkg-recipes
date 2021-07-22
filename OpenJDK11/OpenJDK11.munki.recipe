@@ -11,9 +11,9 @@
 		<key>NAME</key>
 		<string>OpenJDK11</string>
 		<key>MUNKI_REPO_SUBDIR</key>
-		<string>apps/Java</string>
+		<string>development/openjdk</string>
 		<key>MUNKI_CATEGORY</key>
-		<string>Internet Plugins</string>
+		<string>Development</string>
 		<key>pkginfo</key>
 		<dict>
 			<key>catalogs</key>

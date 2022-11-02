@@ -21,7 +21,7 @@
             <key>Arguments</key>
             <dict>
                 <key>url</key>
-                <string>https://www.vagrantup.com/vmware/downloads.html</string>
+                <string>https://developer.hashicorp.com/vagrant/downloads/vmware</string>
                 <key>re_pattern</key>
                 <string>&lt;a .* href="(?P&lt;url&gt;https://[^\"]+/vagrant-vmware-utility[^\"]+\.dmg)"&gt;</string>
             </dict>

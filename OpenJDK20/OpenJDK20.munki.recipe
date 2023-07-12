@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>Imports OpenJDK20 package into Munki.</string>
+	<key>Identifier</key>
+	<string>com.github.slangdaddy.munki.OpenJDK20</string>
+	<key>Input</key>
+	<dict>
+		<key>NAME</key>
+		<string>OpenJDK20</string>
+		<key>MUNKI_REPO_SUBDIR</key>
+		<string>development/openjdk</string>
+		<key>MUNKI_CATEGORY</key>
+		<string>Development</string>
+		<key>pkginfo</key>
+		<dict>
+			<key>catalogs</key>
+			<array>
+				<string>testing</string>
+			</array>
+			<key>category</key>
+			<string>%MUNKI_CATEGORY%</string>
+			<key>description</key>
+			<string>Open Source reference implementation of the Java Development Kit.</string>
+			<key>developer</key>
+			<string>Open Source Community</string>
+			<key>display_name</key>
+			<string>Open JDK 20</string>
+			<key>minimum_os_version</key>
+			<string>10.10</string>
+			<key>name</key>
+			<string>%NAME%</string>
+			<key>unattended_install</key>
+			<true/>
+			<key>unattended_uninstall</key>
+			<true/>
+		</dict>
+	</dict>
+	<key>MinimumVersion</key>
+	<string>0.2.0</string>
+	<key>ParentRecipe</key>
+	<string>com.github.peshay.pkg.OpenJDK20</string>
+	<key>Process</key>
+	<array>
+		<dict>
+			<key>Processor</key>
+			<string>MunkiImporter</string>
+			<key>Arguments</key>
+			<dict>
+				<key>pkg_path</key>
+				<string>%pkg_path%</string>
+				<key>repo_subdirectory</key>
+				<string>%MUNKI_REPO_SUBDIR%</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>
